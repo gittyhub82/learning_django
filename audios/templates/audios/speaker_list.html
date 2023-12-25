@@ -1,0 +1,93 @@
+{% extends 'audios/index.html' %}
+
+{% load static %}
+
+
+ {% block title %}
+    Shiekh list
+{% endblock title %}
+ 
+
+{% block body %}
+    <div class="container my-5">
+        <h1 class="display-3">Shiekh(s)</h1>
+        <hr style="height: 16px;">
+        <a class="btn ms-sm-4 btn-outline-dark my-4 mt-lg-5" href="{% url 'audios:index' %}">Back</a>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for shiekh in shiekhs %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if shiekh.image %}
+                          <img src="{{ shiekh.image.url }}" alt="{{ shiekh.name }} Image" class="card-img top">
+                        {% else %}
+                         <img src="{% static 'images/logo.png' %}" alt="Placeholder Image" class="card-img top">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ shiekh.name }}</h5>
+                            <p class="card-text">
+                                {{ shiekh.description|truncatechars:50 }}
+
+                                {% if shiekh.description|length > 50 %}
+                                    <a href="#" class="btn btn-sm btn-secondary read-more" data-bs-toggle="modal" data-bs-target="#speakerModal{{ forloop.counter }}">Read more</a>
+                                {% endif %}
+                            </p>
+                            <a href="{% url 'audios:books_by_shiekh' shiekh.id %}" class="btn btn-primary">View Books</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="speakerModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="speakerModalLabel{{ forloop.counter }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <h5 class="modal-title" id="speakerModalLabel{{ forloop.counter }}">{{ shiekh.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body">
+                                <p class="lead">{{ shiekh.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="lead">There is/are no shiekh(s) currently available.</p>
+            {% endfor %}
+            
+            
+            
+        </div>
+        <div class="pagination justify-content-center mt-5">
+            <ul class="pagination">
+                {% if shiekhs.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ shiekhs.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for num in shiekhs.paginator.page_range %}
+                    {% if shiekhs.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if shiekhs.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ shiekhs.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ shiekhs.paginator.num_pages }}">Last &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+     </div>
+        
+
+
+{% endblock body %}

@@ -1,0 +1,27 @@
+{% extends 'audios/index.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Add Records
+{% endblock title %}
+    
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Add Records</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ shiekh_form|crispy }}
+            </div>
+            <div class="mb-3">
+                {{ book_form|crispy }}
+            </div>
+            <div class="mb-3">
+                {{ audio_form|crispy }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock body %}

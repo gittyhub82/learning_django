@@ -1,0 +1,64 @@
+
+{% extends 'audios/index.html' %}
+
+{% block title %}
+    Search Results - Bayero University Kano Audio Library
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Search Results for "{{ query }}"</h1>
+    <a class="btn btn-outline-dark my-4" href="{% url 'audios:index' %}">Back</a>
+
+    {% if shiekhs %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2 class="card-title">Shiekhs</h2>
+            <ul class="list-group list-group-flush">
+                {% for shiekh in shiekhs %}
+                    <li class="list-group-item">
+                        <a class="text-decoration-none" href="{% url 'audios:speaker_list' shiekh.id %}">{{ shiekh.name }}</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No Shiekhs found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if books %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2 class="card-title">Books</h2>
+            <ul class="list-group list-group-flush">
+                {% for book in books %}
+                    <li class="list-group-item">
+                        <a class="text-decoration-none" href="{% url 'audios:episodes_by_book' book.id %}">{{ book.title }} - {{ book.shiekh.name }}</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No books found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if episodes %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2 class="card-title">Episodes</h2>
+            <ul class="list-group list-group-flush">
+                {% for episode in episodes %}
+                    <li class="list-group-item">
+                        {{ episode.title }} - {{ episode.book.title }} - {{ episode.book.shiekh.name }}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No episodes found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock body %}

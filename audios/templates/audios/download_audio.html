@@ -1,0 +1,20 @@
+{% extends 'audios/index.html' %}
+    
+{% block title %}
+Download Audio
+{% endblock title %}
+
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Download Audio</h1>
+        <hr>
+        <div class="card my-4">
+            <div class="card-body">
+                <h5 class="card-title">Audio File</h5>
+                <p class="card-text">Click below to download the audio file:</p>
+                <a href="{{ audio_url }}" class="btn btn-primary" download>Download Audio</a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

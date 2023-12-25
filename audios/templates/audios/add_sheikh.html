@@ -1,0 +1,20 @@
+{% extends 'audios/index.html' %}
+
+
+{% load crispy_forms_tags %}  <!-- Load Crispy Forms -->
+{% block title %}
+    Add Shiekh
+{% endblock title %}
+
+{% block body %}
+    <h1>Add Sheikh</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ shiekh_form|crispy }}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add Sheikh</button>
+    </form>
+{% endblock body %}
