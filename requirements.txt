@@ -10,7 +10,6 @@ django-crispy-forms==2.1
 gunicorn==21.2.0
 idna==3.6
 packaging==23.2
-psycopg2==2.9.9
 psycopg2-binary==2.9.9
 python-dateutil==1.5
 requests==2.31.0
