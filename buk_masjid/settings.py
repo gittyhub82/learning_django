@@ -26,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fig66d71ky4&0y6bbfdb%(8-$6h8_j-8vxp)p8_xxxcj(9q==a'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['.vercel.app', 'now.sh', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ")
 
 
 # Application definition
@@ -96,7 +96,10 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.parse('postgres://buk_mosque_user:lgObz1oim6s7xnBif16TzaAZmENNKjzJ@dpg-cm52s4un7f5s73c2netg-a.oregon-postgres.render.com/buk_mosque')
+
+dj_database_url = os.environ.get("DATABASE_URL")
+
+DATABASES['default'] = dj_database_url.parse(dj_database_url)
 # postgres://buk_mosque_user:lgObz1oim6s7xnBif16TzaAZmENNKjzJ@dpg-cm52s4un7f5s73c2netg-a.oregon-postgres.render.com/buk_mosque
 
 # Password validation
